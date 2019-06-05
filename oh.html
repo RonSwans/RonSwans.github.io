@@ -89,8 +89,108 @@ void mousePressed(){
 }
 }
 
+/** Alien Killers
+*Author: Ryan Hill
+*Version: 1 6/5/19
+*/
+// Have Fun
 
+float gunX = 350; //GUN POSITION
+float bulletY = 650; //BULLET POSITION
+float bulletX = 355;
+float ellX = 350; //ALIEN POSITION
+float ellY = 0;
+boolean moveDown = true; //ALIEN MOVING DOWN
+boolean moveUp = false; 
+boolean bullet = true; 
+int countA = 0; 
+int countY = 0; 
+PFont font; 
+PImage alien;
+PImage end;
+
+
+void setup(){
+  size(700,700); 
+  background(255);
+  alien = loadImage("./img/alien.png");
+  end = loadImage("./img/end.png");
+  font = loadFont("Arial-BoldMT-48.vlw"); 
+}
+void draw(){
+ 
+  background(0);
+  makeButton();
+ 
+  }  
+
+void makeButton(){
+  fill(255);
+  if(mouseX > 200 && mouseX < 400 && mouseY > 200 && mouseY < 250){
+    fill(120);
+  }
+  rect(100,200,300,50,15);
+  fill(255,0,0);
+  textSize(35);
+  if(mouseX > 200 && mouseX < 400 && mouseY > 200 && mouseY < 250){
+    fill(0,0,255); 
+    if(mousePressed){
+     textSize(41); //WHEN CLICKED MAKES THE TEXT SIZE BIGGER
+    }
+  }
+  text("PLAY AGAIN",130,240);
+  background(255);
+  textFont(font);
+  fill(0,255,0);
+  ellipse(ellX,ellY,50,50);
+  text("Aliens",50,50);
+  text(countA,200,50); //SCORE FOR ALIEN
+  fill(0);
+  rect(gunX,600,30,100);
+  text("You",450,50);
+  text(countY,550,50); //SCORE FOR YOU
+  bulletX = gunX + 5;
+  ellipse(bulletX,bulletY,10,10); //BULLET IN GUN
+
+  if(keyPressed == true && key == CODED && keyCode == LEFT){
+    gunX = gunX - 12;
+  }
+  if(keyPressed == true && key == CODED && keyCode == RIGHT){
+    gunX = gunX + 6;
+  }
+  if(moveDown == true){
+   ellY = ellY + 4;
+  }
+  if(ellY <= 650){
+    moveDown = true;
+  }
+  if(ellY>650){
+    ellY = 0;
+    ellX = random (30,670);
+    moveDown = true;
+    countA++;
+  }
+  if(keyPressed && key == ' ') // IS THE SPACE BAR PRESSED
+  {
+    moveUp = true;
+  }
+  if(moveUp == true){
+    bulletY = bulletY - 10;
+  }
+  if(bulletY <10){
+    bulletY = 650;
+    moveUp = false;
+  }
+  if(bulletY < ellY + 50 && bulletY > ellY - 50 && bulletX < ellX + 50 && bulletX > ellX -50)
+  {
+    ellY = 0;
+    ellX = random (30,670);
+    moveDown = true;
+    countY++;
+  }
+}
 </script>
 <canvas id="sketch" style="border: 1px solid black;"></canvas>
 </body>
 </html>
+
